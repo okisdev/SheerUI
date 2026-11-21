@@ -276,7 +276,7 @@ public struct StateDot: View {
     }
 }
 
-/// A list row: optional artwork for what the row is (carrying the state dot on its foot) or a bare state dot, the name over one meta line, then its trailing value, followed by the row's commands while the pointer or the keyboard is on it. Clicking the row, or Return or Space while it has focus, opens it.
+/// A list row: optional artwork for what the row is (carrying the state dot on its foot) or a bare state dot, the name over an optional meta line, then its trailing value, followed by the row's commands while the pointer or the keyboard is on it. Clicking the row, or Return or Space while it has focus, opens it.
 public struct ListRow<Trailing: View, Actions: View>: View {
     var dot: Color?
     var artwork: Artwork?
@@ -345,10 +345,12 @@ public struct ListRow<Trailing: View, Actions: View>: View {
                     .font(nested ? .callout : .rowTitle)
                     .lineLimit(1)
                     .truncationMode(truncation)
-                Text(meta)
-                    .font(.rowMeta)
-                    .foregroundStyle(metaIsError ? AnyShapeStyle(.red) : AnyShapeStyle(.secondary))
-                    .lineLimit(1)
+                if !meta.isEmpty {
+                    Text(meta)
+                        .font(.rowMeta)
+                        .foregroundStyle(metaIsError ? AnyShapeStyle(.red) : AnyShapeStyle(.secondary))
+                        .lineLimit(1)
+                }
             }
             Spacer(minLength: 8)
             HStack(spacing: 10) {

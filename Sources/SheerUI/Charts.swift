@@ -43,25 +43,29 @@ public struct SampleChart: View {
     private let mode: Mode
     private let ceiling: Double?
     private let minimumPeak: Double
+    private let span: TimeInterval?
     private let height: CGFloat
     private let format: (Double) -> String
 
     public init(
         series: [ChartSeries], mode: Mode = .stacked, ceiling: Double? = nil, minimumPeak: Double = 1,
-        height: CGFloat = 96, format: @escaping (Double) -> String
+        span: TimeInterval? = nil, height: CGFloat = 96, format: @escaping (Double) -> String
     ) {
         self.series = series
         self.mode = mode
         self.ceiling = ceiling
         self.minimumPeak = minimumPeak
+        self.span = span
         self.height = height
         self.format = format
     }
 
     public var body: some View {
-        SampleChartPlot(series: series, data: SampleChartData(series: series, mode: mode, ceiling: ceiling, minimumPeak: minimumPeak), format: format)
-            .frame(height: max(0, height))
-            .transaction { $0.animation = nil }
+        SampleChartPlot(
+            series: series, data: SampleChartData(series: series, mode: mode, ceiling: ceiling, minimumPeak: minimumPeak, span: span), format: format
+        )
+        .frame(height: max(0, height))
+        .transaction { $0.animation = nil }
     }
 }
 
@@ -113,7 +117,7 @@ struct SampleChartData {
     let domain: ClosedRange<Date>
     let barWidthFraction: Double
 
-    init(series: [ChartSeries], mode: SampleChart.Mode, ceiling: Double?, minimumPeak: Double) {
+    init(series: [ChartSeries], mode: SampleChart.Mode, ceiling: Double?, minimumPeak: Double, span: TimeInterval? = nil) {
         var values: [Date: [Double]] = [:]
         for (index, item) in series.enumerated() {
             for point in item.points where point.date.timeIntervalSinceReferenceDate.isFinite {
@@ -126,7 +130,11 @@ struct SampleChartData {
         let interval = zip(dates, dates.dropFirst()).map { $1.timeIntervalSince($0) }.min() ?? 1
         let oldest = dates.first ?? Date(timeIntervalSinceReferenceDate: 0)
         let newest = dates.last ?? oldest
-        domain = oldest.addingTimeInterval(-interval / 2)...newest.addingTimeInterval(interval / 2)
+        if let span, span.isFinite && span > 0 {
+            domain = newest.addingTimeInterval(-span)...newest
+        } else {
+            domain = oldest.addingTimeInterval(-interval / 2)...newest.addingTimeInterval(interval / 2)
+        }
         barWidthFraction = interval * 0.75 / domain.upperBound.timeIntervalSince(domain.lowerBound)
         scale = SampleChartScale(values: columns.map(\.values), mode: mode, ceiling: ceiling, minimumPeak: minimumPeak)
         var marks: [Bar] = []
@@ -144,6 +152,10 @@ struct SampleChartData {
             }
         }
         bars = marks
+    }
+
+    func barWidth(in plotWidth: CGFloat) -> CGFloat {
+        min(24, max(0, plotWidth) * barWidthFraction)
     }
 
     func nearest(to date: Date) -> Column? {
@@ -166,7 +178,7 @@ private struct SampleChartPlot: View {
                     BarMark(
                         x: .value(Text(verbatim: ""), bar.id.date),
                         yStart: .value(series[bar.series].name, lower), yEnd: .value(series[bar.series].name, upper),
-                        width: .fixed(size.size.width * data.barWidthFraction)
+                        width: .fixed(data.barWidth(in: size.size.width))
                     )
                     .foregroundStyle(ChartPalette.color(series[bar.series].slot))
                     .accessibilityLabel(series[bar.series].name)

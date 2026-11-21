@@ -65,8 +65,50 @@ struct DataDisplayTests {
         let width = data.barWidthFraction * data.domain.upperBound.timeIntervalSince(data.domain.lowerBound)
         #expect(width == interval * 0.75)
         #expect(abs((interval - width) / width - 1 / 3) < 0.000_001)
+        #expect(data.domain.lowerBound == first.addingTimeInterval(-interval / 2))
         #expect(data.domain.upperBound == last.addingTimeInterval(interval / 2))
         #expect(data.barWidthFraction == 0.375)
+    }
+
+    @Test func chartSpanEndsAtTheNewestSample() {
+        let newest = Date(timeIntervalSinceReferenceDate: 120)
+        let series = [
+            ChartSeries(name: Text(verbatim: "A"), slot: 0, points: [(newest, 20), (newest.addingTimeInterval(-1), 10)]),
+            ChartSeries(name: Text(verbatim: "B"), slot: 1, points: [(newest.addingTimeInterval(-100), 5)])
+        ]
+        let data = SampleChartData(series: series, mode: .stacked, ceiling: nil, minimumPeak: 1, span: 60)
+        #expect(data.domain == newest.addingTimeInterval(-60)...newest)
+        #expect(data.barWidth(in: 320) == 4)
+    }
+
+    @Test(arguments: [0, 1]) func chartSpanWorksWithEmptyAndSingleSampleData(count: Int) {
+        let series = [
+            ChartSeries(name: Text(verbatim: "A"), slot: 0, points: Array([(Date(timeIntervalSinceReferenceDate: 0), 10.0)].prefix(count)))
+        ]
+        let data = SampleChartData(series: series, mode: .stacked, ceiling: nil, minimumPeak: 1, span: 60)
+        #expect(data.domain == Date(timeIntervalSinceReferenceDate: -60)...Date(timeIntervalSinceReferenceDate: 0))
+        #expect(data.barWidth(in: 320) == 4)
+    }
+
+    @Test(arguments: [0.0, -1, .nan, .infinity]) func invalidChartSpansKeepTheAutomaticDomain(span: TimeInterval) {
+        let date = Date(timeIntervalSinceReferenceDate: 0)
+        let series = [ChartSeries(name: Text(verbatim: "A"), slot: 0, points: [(date, 10)])]
+        let data = SampleChartData(series: series, mode: .stacked, ceiling: nil, minimumPeak: 1, span: span)
+        #expect(data.domain == date.addingTimeInterval(-0.5)...date.addingTimeInterval(0.5))
+    }
+
+    @Test(arguments: [nil, 2.0] as [TimeInterval?]) func chartBarsStayCappedAndKeepTheirSpacing(span: TimeInterval?) {
+        let first = Date(timeIntervalSinceReferenceDate: 0)
+        let last = first.addingTimeInterval(1)
+        let series = [ChartSeries(name: Text(verbatim: "A"), slot: 0, points: [(first, 10), (last, 20)])]
+        let data = SampleChartData(series: series, mode: .stacked, ceiling: nil, minimumPeak: 1, span: span)
+        #expect(data.barWidth(in: 320) == 24)
+        #expect(data.barWidth(in: 64) == 24)
+        #expect(data.barWidth(in: 32) == 12)
+        #expect(data.barWidth(in: 0) == 0)
+        let spacing = 32 / data.domain.upperBound.timeIntervalSince(data.domain.lowerBound)
+        let width = data.barWidth(in: 32)
+        #expect(abs((spacing - width) / width - 1 / 3) < 0.000_001)
     }
 
     @Test func mirroredMarksStackDownward() throws {
