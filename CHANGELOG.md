@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.3
+
+- add `span` to `SampleChart` for a fixed time window ending at the newest sample, with bars capped at 24 points
+- hide an empty `ListRow` meta line and centre the title within the row's minimum height
+
 ## 0.1.2
 
 - every component takes its accent from the environment tint, so an app picks one with `.tint(_:)` and gets the system accent when it sets none
