@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  swift:
+    name: Lint, build and test the Swift package
+    runs-on: xcode-27
+    steps:
+      - uses: actions/checkout@v7
+      - name: Lint
+        run: xcrun swift-format lint --strict --recursive Sources Tests
+      - name: Build
+        run: swift build
+      - name: Test
+        run: swift test
