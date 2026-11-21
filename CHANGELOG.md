@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
+- add `Artwork.file(_:)` for the icon the system shows for a file, folder or app, read once per path, so a list of apps draws their icons without converting them to image data on every update
+
 ## 0.1.3
 
 - add `span` to `SampleChart` for a fixed time window ending at the newest sample, with bars capped at 24 points
