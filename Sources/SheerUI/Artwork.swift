@@ -7,6 +7,8 @@ public enum Artwork: Hashable, Sendable {
     /// A type identifier whose system icon pictures the product, such as `com.apple.studio-display`.
     case product(String)
     case computer
+    /// The icon the system shows for a file, folder or app on this Mac, such as an app bundle's own icon.
+    case file(URL)
     case mark(BrandMark)
     case symbol(String)
     /// A picture a person supplied by address; `fallback` shows until it loads and when it cannot.
@@ -79,6 +81,10 @@ public struct ArtworkView: View {
             Image(nsImage: NSImage(named: NSImage.computerName) ?? NSImage())
                 .resizable()
                 .interpolation(.high)
+        case .file(let url):
+            Image(nsImage: FileIcons.icon(for: url))
+                .resizable()
+                .interpolation(.high)
         case .mark(let mark):
             Image(nsImage: mark.image)
                 .resizable()
@@ -98,5 +104,17 @@ public struct ArtworkView: View {
                 }
             }
         }
+    }
+}
+
+/// File icons read once per path, because the system builds every resolution of an icon on each request.
+@MainActor enum FileIcons {
+    private static let cache = NSCache<NSURL, NSImage>()
+
+    static func icon(for url: URL) -> NSImage {
+        if let image = cache.object(forKey: url as NSURL) { return image }
+        let image = NSWorkspace.shared.icon(forFile: url.path)
+        cache.setObject(image, forKey: url as NSURL)
+        return image
     }
 }
