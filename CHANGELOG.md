@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.2
+
+- every component takes its accent from the environment tint, so an app picks one with `.tint(_:)` and gets the system accent when it sets none
+- add `TabbedPage` for a page of several views: each view is built on first choice and kept, the capsule tabs are drawn once above them and step aside while a view shows a drilled detail
+- add `MenuBarLabel`, `MenuBarPanel` and `MenuBarSection` for status items and their popovers
+- add data display: `ChartPalette`, `Figures` and `Figure`, `SampleChart` (stacked or mirrored bars over time with a hover tooltip), `Meter`, `CapacityBar` with `CapacityLegend`, and `ShareBar`
+- capsule tabs respect Reduce Motion
+- `Artwork.image(_:fallback:)` shows a picture by address, with the fallback while it loads and when it cannot
+- `LogView` takes a `highlight` closure that styles a line's message, such as JSON tokens
+
 ## 0.1.1
 
 - add `StepRow` and `StepState` for a job the person watches: the state as a mark in a fixed leading column (an empty ring, live dots, a check, an exclamation mark), so titles stay aligned as steps advance, then the elapsed seconds and at most one command for a failed step

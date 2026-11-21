@@ -23,13 +23,15 @@ Then depend on the `SheerUI` product. SheerUI requires macOS 15 or later. An app
 | Area | Components |
 | --- | --- |
 | Window | `windowChrome()`, `windowChromeBackground()`, `sheetSurface()`, `SidebarRow`, `SidebarRowLabel` |
-| Pages | `Page`, `DrillPage`, `ListPage`, `PageHeader`, `pageCommands(_:)`, `tabAccessory(_:_:)` |
+| Pages | `Page`, `DrillPage`, `ListPage`, `TabbedPage`, `PageHeader`, `pageCommands(_:)`, `tabAccessory(_:_:)` |
 | Lists | `GroupedList`, `ListGroup`, `ListRow`, `DisclosureRow`, `StateDot`, `EmptyLine` |
 | Controls | `CircleButtonStyle`, `CapsuleButtonStyle`, `CapsuleTabs`, `CapsuleSearchField`, `ActionCapsule`, `DestructiveButton` |
 | Menus | `PopUpMenu`, `CircleMenu`, `MenuCapsule`, `MenuPicker` |
+| Menu bar | `MenuBarLabel`, `MenuBarPanel`, `MenuBarSection` |
 | Forms and sheets | `CardsFormStyle` (`.formStyle(.cards)`), `FormSheet`, `FieldRow`, `InfoRow`, `KeyValueTable`, `SettingsNotice`, `SettingsSliderRow`, `ViewerSheet` |
 | States | `EmptyState`, `LoadingState`, `PlaceholderRows`, `FormPlaceholder`, `DotMatrix`, `StepRow`, `ProgressLine`, `Toasts`, `Clipboard` |
 | Content | `FileBrowser`, `LogView`, `Artwork`, `ArtworkView` |
+| Data | `ChartPalette`, `Figures`, `Figure`, `ChartSeries`, `SampleChart`, `Meter`, `CapacityPart`, `CapacityBar`, `CapacityLegend`, `ShareBar` |
 
 Metrics, grounds and text roles are in `Sources/SheerUI/Tokens.swift`.
 

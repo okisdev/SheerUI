@@ -9,6 +9,8 @@ public enum Artwork: Hashable, Sendable {
     case computer
     case mark(BrandMark)
     case symbol(String)
+    /// A picture a person supplied by address; `fallback` shows until it loads and when it cannot.
+    indirect case image(URL, fallback: Artwork)
 }
 
 /// A one path mark on a 24 point grid with its brand color.
@@ -87,6 +89,14 @@ public struct ArtworkView: View {
             Image(systemName: name)
                 .font(.system(size: size * 0.56))
                 .foregroundStyle(.secondary)
+        case .image(let url, let fallback):
+            AsyncImage(url: url) { phase in
+                if let image = phase.image {
+                    image.resizable().interpolation(.high).scaledToFit()
+                } else {
+                    ArtworkView(fallback, size: size)
+                }
+            }
         }
     }
 }
