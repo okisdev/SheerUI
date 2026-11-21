@@ -9,7 +9,7 @@ The Swift package for macOS lives at the repository root. Libraries for other pl
 Add the package in Xcode or in `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/okisdev/SheerUI", from: "0.1.0")
+.package(url: "https://github.com/okisdev/SheerUI", from: "0.1.1")
 ```
 
 Then depend on the `SheerUI` product. SheerUI requires macOS 15 or later. An app that also targets iOS depends on it for macOS only:
@@ -28,7 +28,7 @@ Then depend on the `SheerUI` product. SheerUI requires macOS 15 or later. An app
 | Controls | `CircleButtonStyle`, `CapsuleButtonStyle`, `CapsuleTabs`, `CapsuleSearchField`, `ActionCapsule`, `DestructiveButton` |
 | Menus | `PopUpMenu`, `CircleMenu`, `MenuCapsule`, `MenuPicker` |
 | Forms and sheets | `CardsFormStyle` (`.formStyle(.cards)`), `FormSheet`, `FieldRow`, `InfoRow`, `KeyValueTable`, `SettingsNotice`, `SettingsSliderRow`, `ViewerSheet` |
-| States | `EmptyState`, `LoadingState`, `PlaceholderRows`, `FormPlaceholder`, `DotMatrix`, `ProgressLine`, `Toasts`, `Clipboard` |
+| States | `EmptyState`, `LoadingState`, `PlaceholderRows`, `FormPlaceholder`, `DotMatrix`, `StepRow`, `ProgressLine`, `Toasts`, `Clipboard` |
 | Content | `FileBrowser`, `LogView`, `Artwork`, `ArtworkView` |
 
 Metrics, grounds and text roles are in `Sources/SheerUI/Tokens.swift`.
