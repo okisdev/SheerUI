@@ -1,10 +1,11 @@
 import SwiftUI
 
-/// A sheet that completes something: its title over one line saying what it makes, the form as cards sized to what it holds (scrolling only past the window's reach), then a footer with at most one secondary command on the leading side and Cancel and the one finishing command on the trailing side. Escape cancels and Return finishes; while it works, the footer shows the work and the sheet cannot be dismissed.
+/// A sheet that completes something: its title over one line saying what it makes, level with the sheet's corner like a page header, the form as cards sized to what it holds (scrolling only past the window's reach), then a footer with at most one secondary command on the leading side and Cancel (or the sheet's own word for leaving, such as Later) and the one finishing command on the trailing side. Escape cancels and Return finishes; while it works, the footer shows the work and the sheet cannot be dismissed.
 public struct FormSheet<Content: View, Secondary: View>: View {
     let title: Text
     var subtitle: Text?
     let action: Text
+    var cancel: Text?
     var canFinish: Bool
     var working: Text?
     var width: CGFloat
@@ -15,21 +16,24 @@ public struct FormSheet<Content: View, Secondary: View>: View {
     @State private var contentHeight: CGFloat = 0
 
     public init(
-        title: LocalizedStringKey, subtitle: LocalizedStringKey? = nil, action: LocalizedStringKey, canFinish: Bool = true, working: LocalizedStringKey? = nil,
+        title: LocalizedStringKey, subtitle: LocalizedStringKey? = nil, action: LocalizedStringKey, cancel: LocalizedStringKey? = nil, canFinish: Bool = true,
+        working: LocalizedStringKey? = nil,
         width: CGFloat = 560, finish: @escaping () -> Void, @ViewBuilder secondary: () -> Secondary, @ViewBuilder content: () -> Content
     ) {
         self.init(
-            title: Text(title), subtitle: subtitle.map { Text($0) }, action: Text(action), canFinish: canFinish, working: working.map { Text($0) },
+            title: Text(title), subtitle: subtitle.map { Text($0) }, action: Text(action), cancel: cancel.map { Text($0) }, canFinish: canFinish,
+            working: working.map { Text($0) },
             width: width, finish: finish, secondary: secondary, content: content)
     }
 
     public init(
-        title: Text, subtitle: Text? = nil, action: Text, canFinish: Bool = true, working: Text? = nil,
+        title: Text, subtitle: Text? = nil, action: Text, cancel: Text? = nil, canFinish: Bool = true, working: Text? = nil,
         width: CGFloat = 560, finish: @escaping () -> Void, @ViewBuilder secondary: () -> Secondary, @ViewBuilder content: () -> Content
     ) {
         self.title = title
         self.subtitle = subtitle
         self.action = action
+        self.cancel = cancel
         self.canFinish = canFinish
         self.working = working
         self.width = width
@@ -40,14 +44,15 @@ public struct FormSheet<Content: View, Secondary: View>: View {
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            VStack(alignment: .leading, spacing: 2) {
-                title.font(.headline)
+            VStack(alignment: .leading, spacing: 1) {
+                title.font(.headline).lineLimit(1)
                 if let subtitle {
-                    subtitle.font(.subheadline).foregroundStyle(.secondary)
+                    subtitle.font(.subheadline).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                 }
             }
+            .frame(minHeight: Metrics.control)
             .padding(.horizontal, Metrics.pageInset)
-            .padding(.top, Metrics.pageInset - 4)
+            .padding(.top, Metrics.pageInset)
             .padding(.bottom, 16)
             ScrollView {
                 content
@@ -73,10 +78,14 @@ public struct FormSheet<Content: View, Secondary: View>: View {
                     }
                     .transition(.opacity)
                 }
-                Button(String(localized: "Cancel", bundle: .module), role: .cancel) { dismiss() }
-                    .buttonStyle(.capsule)
-                    .keyboardShortcut(.cancelAction)
-                    .disabled(working != nil)
+                Button(role: .cancel) {
+                    dismiss()
+                } label: {
+                    cancel ?? Text(String(localized: "Cancel", bundle: .module))
+                }
+                .buttonStyle(.capsule)
+                .keyboardShortcut(.cancelAction)
+                .disabled(working != nil)
                 Button(action: finish) { action }
                     .buttonStyle(.prominentCapsule)
                     .keyboardShortcut(.defaultAction)
@@ -84,7 +93,7 @@ public struct FormSheet<Content: View, Secondary: View>: View {
             }
             .padding(.horizontal, Metrics.pageInset)
             .padding(.top, 20)
-            .padding(.bottom, Metrics.pageInset - 4)
+            .padding(.bottom, Metrics.pageInset)
             .animation(.easeOut(duration: 0.15), value: working != nil)
         }
         .frame(width: width)
@@ -95,20 +104,24 @@ public struct FormSheet<Content: View, Secondary: View>: View {
 
 extension FormSheet where Secondary == EmptyView {
     public init(
-        title: Text, subtitle: Text? = nil, action: Text, canFinish: Bool = true, working: Text? = nil, width: CGFloat = 560, finish: @escaping () -> Void,
+        title: Text, subtitle: Text? = nil, action: Text, cancel: Text? = nil, canFinish: Bool = true, working: Text? = nil, width: CGFloat = 560,
+        finish: @escaping () -> Void,
         @ViewBuilder content: () -> Content
     ) {
         self.init(
-            title: title, subtitle: subtitle, action: action, canFinish: canFinish, working: working, width: width, finish: finish, secondary: { EmptyView() },
+            title: title, subtitle: subtitle, action: action, cancel: cancel, canFinish: canFinish, working: working, width: width, finish: finish,
+            secondary: { EmptyView() },
             content: content)
     }
 
     public init(
-        title: LocalizedStringKey, subtitle: LocalizedStringKey? = nil, action: LocalizedStringKey, canFinish: Bool = true, working: LocalizedStringKey? = nil,
+        title: LocalizedStringKey, subtitle: LocalizedStringKey? = nil, action: LocalizedStringKey, cancel: LocalizedStringKey? = nil, canFinish: Bool = true,
+        working: LocalizedStringKey? = nil,
         width: CGFloat = 560, finish: @escaping () -> Void, @ViewBuilder content: () -> Content
     ) {
         self.init(
-            title: title, subtitle: subtitle, action: action, canFinish: canFinish, working: working, width: width, finish: finish, secondary: { EmptyView() },
+            title: title, subtitle: subtitle, action: action, cancel: cancel, canFinish: canFinish, working: working, width: width, finish: finish,
+            secondary: { EmptyView() },
             content: content)
     }
 }
