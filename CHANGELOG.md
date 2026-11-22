@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5
+
+- `ListGroup` takes its rows' data instead of a run of views, counts itself from that data and builds only the rows on screen, so a list of every process or package no longer resolves every row on every change
+
 ## 0.1.4
 
 - add `Artwork.file(_:)` for the icon the system shows for a file, folder or app, read once per path, so a list of apps draws their icons without converting them to image data on every update
