@@ -231,6 +231,53 @@ extension ListGroup where Trailing == EmptyView {
     }
 }
 
+extension ListGroup {
+    /// A group built from its rows' data rather than from a run of views. A group given its data
+    /// counts itself and builds only the rows the person can see, which is what a list of every
+    /// process or package needs: the eager form resolves every row on every change.
+    public init<Data: RandomAccessCollection, Row: View>(
+        _ title: String? = nil,
+        _ data: Data,
+        @ViewBuilder trailing: () -> Trailing,
+        @ViewBuilder row: @escaping (Data.Element) -> Row
+    ) where Data.Element: Identifiable, Content == LazyRows<Data, Row> {
+        self.init(title: title, count: data.count, trailing: trailing) {
+            LazyRows(data: data, row: row)
+        }
+    }
+}
+
+extension ListGroup where Trailing == EmptyView {
+    public init<Data: RandomAccessCollection, Row: View>(
+        _ title: String? = nil,
+        _ data: Data,
+        @ViewBuilder row: @escaping (Data.Element) -> Row
+    ) where Data.Element: Identifiable, Content == LazyRows<Data, Row> {
+        self.init(title, data, trailing: { EmptyView() }, row: row)
+    }
+}
+
+/// The rows of a data driven `ListGroup`. It parts its own rows, because a group that let the
+/// group part them would have to resolve every row to count them and would never stay lazy.
+public struct LazyRows<Data: RandomAccessCollection, Row: View>: View where Data.Element: Identifiable {
+    let data: Data
+    @ViewBuilder let row: (Data.Element) -> Row
+
+    public var body: some View {
+        LazyVStack(spacing: 0) {
+            ForEach(data) { element in
+                if element.id != data.first?.id {
+                    Rectangle()
+                        .fill(.hairline)
+                        .frame(height: 1)
+                        .padding(.horizontal, 12)
+                }
+                row(element)
+            }
+        }
+    }
+}
+
 /// One meta line where rows would be, such as when a search matches nothing.
 public struct EmptyLine: View {
     let text: Text
