@@ -488,10 +488,11 @@ private struct MenuBarRowButtonStyle: ButtonStyle {
 extension ShapeStyle where Self == Color {
     /// A card of a menu bar panel: lifted off the popover's material in light and dark alike.
     static var menuCard: Color {
-        Color(nsColor: NSColor(name: nil) { appearance in
-            appearance.bestMatch(from: [.darkAqua, .vibrantDark]) != nil
-                ? NSColor.white.withAlphaComponent(0.07)
-                : NSColor.white.withAlphaComponent(0.72)
-        })
+        Color(
+            nsColor: NSColor(name: nil) { appearance in
+                appearance.bestMatch(from: [.darkAqua, .vibrantDark]) != nil
+                    ? NSColor.white.withAlphaComponent(0.07)
+                    : NSColor.white.withAlphaComponent(0.72)
+            })
     }
 }
