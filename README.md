@@ -27,7 +27,7 @@ Then depend on the `SheerUI` product. SheerUI requires macOS 15 or later. An app
 | Lists | `GroupedList`, `ListGroup`, `ListRow`, `DisclosureRow`, `StateDot`, `EmptyLine` |
 | Controls | `CircleButtonStyle`, `CapsuleButtonStyle`, `CapsuleTabs`, `CapsuleSearchField`, `ActionCapsule`, `DestructiveButton` |
 | Menus | `PopUpMenu`, `CircleMenu`, `MenuCapsule`, `MenuPicker` |
-| Menu bar | `MenuBarLabel`, `MenuBarPanel`, `MenuBarSection` |
+| Menu bar | `MenuBarLabel`, `MenuBarStack`, `MenuBarLevel`, `MenuBarPanel`, `MenuBarSection`, `MenuBarHeadline`, `MenuBarReadings`, `MenuBarRow`, `MenuBarTable`, `MenuBarColumns`, `MenuBarFootnote`, `MenuBarCommands` |
 | Forms and sheets | `CardsFormStyle` (`.formStyle(.cards)`), `FormSheet`, `FieldRow`, `InfoRow`, `KeyValueTable`, `SettingsNotice`, `SettingsSliderRow`, `ViewerSheet` |
 | States | `EmptyState`, `LoadingState`, `PlaceholderRows`, `FormPlaceholder`, `DotMatrix`, `StepRow`, `ProgressLine`, `Toasts`, `Clipboard` |
 | Content | `FileBrowser`, `LogView`, `Artwork`, `ArtworkView` |

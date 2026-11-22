@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.6
+
+- `MenuBarPanel` sets each section on its own card over the popover's material, 300 points wide, instead of one sheet parted by hairlines
+- `MenuBarSection` names its card in the accent color, with column titles or one command in its trailing slot
+- add `MenuBarHeadline` for a panel's first card: a ring with the whole percent inside, the thing's name and its reading
+- add `MenuBarReadings` for two or three readings side by side over the chart they belong to, each with the dot of its series color
+- add `MenuBarRow` for a name and a right aligned value with an optional bar, since `InfoRow` and `LabeledContent` only align inside a form
+- add `MenuBarTable` and `MenuBarColumns` for a short table of the apps using a resource, one right aligned column per measure
+- add `MenuBarFootnote` for the figures under a chart and `MenuBarCommands` for the panel's last card
+- add `MenuBarStack` for two readings stacked in one menu bar line and `MenuBarLevel` for a level as an upright bar with a caption read down its side
+
 ## 0.1.5
 
 - `ListGroup` takes its rows' data instead of a run of views, counts itself from that data and builds only the rows on screen, so a list of every process or package no longer resolves every row on every change
