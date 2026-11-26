@@ -28,9 +28,9 @@ public struct CircleButtonStyle: ButtonStyle {
             .accessibilityAddTraits(selected ? .isSelected : [])
     }
 
-    private func fill(pressed: Bool) -> Color {
-        if selected { return Color.accentColor.opacity(pressed ? 0.24 : hovering ? 0.2 : 0.15) }
-        return Color.primary.opacity(pressed ? 0.14 : hovering && enabled ? 0.1 : 0.06)
+    private func fill(pressed: Bool) -> AnyShapeStyle {
+        if selected { return AnyShapeStyle(.tint.opacity(pressed ? 0.24 : hovering ? 0.2 : 0.15)) }
+        return AnyShapeStyle(Color.primary.opacity(pressed ? 0.14 : hovering && enabled ? 0.1 : 0.06))
     }
 }
 
@@ -66,9 +66,9 @@ public struct CapsuleButtonStyle: ButtonStyle {
             .onHover { hovering = $0 }
     }
 
-    private func fill(pressed: Bool) -> Color {
-        if prominent { return Color.accentColor.opacity(pressed ? 0.8 : hovering ? 0.92 : 1) }
-        return Color.primary.opacity(pressed ? 0.14 : hovering ? 0.1 : 0.06)
+    private func fill(pressed: Bool) -> AnyShapeStyle {
+        if prominent { return AnyShapeStyle(.tint.opacity(pressed ? 0.8 : hovering ? 0.92 : 1)) }
+        return AnyShapeStyle(Color.primary.opacity(pressed ? 0.14 : hovering ? 0.1 : 0.06))
     }
 }
 
@@ -131,6 +131,7 @@ public struct CapsuleTabs<Value: Hashable>: View {
     let options: [(value: Value, title: Text)]
     @Binding var selection: Value
     @Namespace private var namespace
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public init(options: [(value: Value, title: LocalizedStringKey)], selection: Binding<Value>) {
         self.init(options: options.map { ($0.value, Text($0.title)) }, selection: selection)
@@ -146,7 +147,7 @@ public struct CapsuleTabs<Value: Hashable>: View {
             ForEach(Array(options.enumerated()), id: \.offset) { _, option in
                 let chosen = option.value == selection
                 Button {
-                    withAnimation(.snappy(duration: 0.2)) { selection = option.value }
+                    withAnimation(reduceMotion ? nil : .snappy(duration: 0.2)) { selection = option.value }
                 } label: {
                     option.title
                         .font(.body.weight(.medium))

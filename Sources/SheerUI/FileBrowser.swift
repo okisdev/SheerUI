@@ -294,9 +294,9 @@ private struct FileRow: View {
         .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
     }
 
-    private var background: Color {
-        if selected { return Color.accentColor.opacity(focused ? 0.18 : 0.1) }
-        return hovering ? Color.primary.opacity(0.045) : .clear
+    private var background: AnyShapeStyle {
+        if selected { return AnyShapeStyle(.tint.opacity(focused ? 0.18 : 0.1)) }
+        return AnyShapeStyle(hovering ? Color.primary.opacity(0.045) : .clear)
     }
 }
 
