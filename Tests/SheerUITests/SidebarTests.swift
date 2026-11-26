@@ -4,6 +4,21 @@ import Testing
 @testable import SheerUI
 
 struct SidebarTests {
+    @Test func fixedWidthIgnoresDrags() {
+        #expect(SidebarWidth.fixed.clamped(400) == Metrics.sidebarWidth)
+        #expect(SidebarWidth.fixed(240).clamped(100) == 240)
+    }
+
+    @Test(arguments: zip([100.0, 180, 250, 360, 900, .nan, .infinity], [180.0, 180, 250, 360, 360, 220, 220]))
+    func resizableWidthStaysInItsRange(drag: Double, expected: Double) {
+        let width = Double(SidebarWidth.resizable.clamped(CGFloat(drag)))
+        #expect(width == expected)
+    }
+
+    @Test func resizableIdealFallsInsideItsRange() {
+        #expect(SidebarWidth.resizable(ideal: 500, range: 200...300).ideal == 300)
+    }
+
     @Test(arguments: [
         (2, MoveCommandDirection.up, 2),
         (1, .down, 1),

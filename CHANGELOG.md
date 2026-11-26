@@ -3,6 +3,7 @@
 ## 0.1.3
 
 - add `SidebarWindow`, a sidebar on the window's material beside content on the inset sheet, with a draggable top strip and a minimum size
+- `SidebarWindow(sidebarWidth:)` takes `.fixed`, `.fixed(_:)`, `.resizable` or `.resizable(ideal:range:)`; a resizable sidebar is dragged by its edge under a column resize pointer, shows a short grabber only while the pointer is on it, returns to its ideal width on a double click, and remembers its width per window
 - add `SidebarList`, sidebar rows parted by space that the arrow keys move through
 - `CapsuleButtonStyle` takes a weight (`plain`, `prominent`, `ink`) and a size; `.capsule(size:)` and `.inkCapsule` join `.capsule` and `.prominentCapsule`
 - `FormSheet` finishes with an ink capsule, since ink fills only the command that completes a task

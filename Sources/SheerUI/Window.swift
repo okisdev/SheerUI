@@ -1,16 +1,48 @@
 import AppKit
 import SwiftUI
 
-/// A window with a sidebar on the window's material beside content on an inset sheet.
+/// How wide a window's sidebar is: a fixed width, or a width the person drags within a range, remembered per window.
+public struct SidebarWidth: Sendable, Equatable {
+    public let ideal: CGFloat
+    public let range: ClosedRange<CGFloat>?
+
+    public static let fixed = fixed(Metrics.sidebarWidth)
+    public static let resizable = resizable()
+
+    public static func fixed(_ width: CGFloat) -> SidebarWidth {
+        SidebarWidth(ideal: width, range: nil)
+    }
+
+    public static func resizable(ideal: CGFloat = Metrics.sidebarWidth, range: ClosedRange<CGFloat> = 180...360) -> SidebarWidth {
+        SidebarWidth(ideal: min(max(ideal, range.lowerBound), range.upperBound), range: range)
+    }
+
+    func clamped(_ width: CGFloat) -> CGFloat {
+        guard let range, width.isFinite else { return ideal }
+        return min(max(width, range.lowerBound), range.upperBound)
+    }
+}
+
+/// A window with a sidebar on the window's material beside content on an inset sheet. A resizable sidebar is dragged by its edge and returns to its ideal width on a double click.
 public struct SidebarWindow<Sidebar: View, Content: View>: View {
+    private let sidebarWidth: SidebarWidth
     private let minimumSize: CGSize
     private let sidebar: Sidebar
     private let content: Content
+    @SceneStorage("SheerUI.SidebarWindow.width") private var storedWidth: Double = 0
 
-    public init(minimumSize: CGSize = CGSize(width: 860, height: 560), @ViewBuilder sidebar: () -> Sidebar, @ViewBuilder content: () -> Content) {
+    public init(
+        sidebarWidth: SidebarWidth = .fixed, minimumSize: CGSize = CGSize(width: 860, height: 560), @ViewBuilder sidebar: () -> Sidebar,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.sidebarWidth = sidebarWidth
         self.minimumSize = minimumSize
         self.sidebar = sidebar()
         self.content = content()
+    }
+
+    private var width: CGFloat {
+        storedWidth > 0 ? sidebarWidth.clamped(storedWidth) : sidebarWidth.ideal
     }
 
     public var body: some View {
@@ -24,7 +56,16 @@ public struct SidebarWindow<Sidebar: View, Content: View>: View {
                 sidebar
                     .frame(maxHeight: .infinity, alignment: .top)
             }
-            .frame(width: Metrics.sidebarWidth)
+            .frame(width: width)
+            .overlay(alignment: .trailing) {
+                if sidebarWidth.range != nil {
+                    SidebarResizeHandle(
+                        width: width,
+                        resize: { storedWidth = sidebarWidth.clamped($0) },
+                        reset: { storedWidth = 0 })
+                }
+            }
+            .zIndex(1)
             content
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .sheetSurface()
@@ -35,6 +76,53 @@ public struct SidebarWindow<Sidebar: View, Content: View>: View {
         .toolbar(removing: .title)
         .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
         .frame(minWidth: minimumSize.width, minHeight: minimumSize.height)
+    }
+}
+
+/// The edge between the sidebar and the sheet: a column resize pointer across its whole height, and a short grabber that fades in only while the pointer is on it or it is being dragged.
+private struct SidebarResizeHandle: View {
+    let width: CGFloat
+    let resize: (CGFloat) -> Void
+    let reset: () -> Void
+    @State private var hovering = false
+    @State private var startWidth: CGFloat?
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        let dragging = startWidth != nil
+        Capsule()
+            .fill(.secondary.opacity(dragging ? 0.6 : 0.35))
+            .frame(width: 3, height: 32)
+            .opacity(hovering || dragging ? 1 : 0)
+            .frame(width: Metrics.sheetInset)
+            .frame(maxHeight: .infinity)
+            .contentShape(.rect)
+            .offset(x: Metrics.sheetInset / 2)
+            .pointerStyle(.columnResize)
+            .onHover { hovering = $0 }
+            .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: hovering || dragging)
+            .gesture(
+                DragGesture(minimumDistance: 1, coordinateSpace: .global)
+                    .onChanged { value in
+                        let start = startWidth ?? width
+                        startWidth = start
+                        var transaction = Transaction()
+                        transaction.disablesAnimations = true
+                        withTransaction(transaction) { resize(start + value.translation.width) }
+                    }
+                    .onEnded { _ in startWidth = nil }
+            )
+            .onTapGesture(count: 2, perform: reset)
+            .accessibilityElement()
+            .accessibilityLabel(Text("Sidebar Width", bundle: .module))
+            .accessibilityValue(Text(width, format: .number.precision(.fractionLength(0))))
+            .accessibilityAdjustableAction { direction in
+                switch direction {
+                case .increment: resize(width + 20)
+                case .decrement: resize(width - 20)
+                @unknown default: break
+                }
+            }
     }
 }
 
