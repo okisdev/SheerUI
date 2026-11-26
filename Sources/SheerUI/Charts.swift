@@ -83,11 +83,14 @@ struct SampleChartScale {
             upperPeak = values.map { nonnegativeValue($0.first ?? 0) }.max() ?? 0
             lowerPeak = values.map { $0.dropFirst().reduce(0) { $0 + nonnegativeValue($1) } }.max() ?? 0
         }
-        let peak = upperPeak + lowerPeak
+        let limit = Double.greatestFiniteMagnitude / 2
+        let upper = min(upperPeak, limit)
+        let lower = min(lowerPeak, limit)
+        let peak = upper + lower
         let fixed = ceiling.flatMap { $0.isFinite && $0 > 0 ? $0 : nil }
         let extent = fixed ?? max(peak, nonnegativeValue(minimumPeak))
         let safeExtent = extent > 0 ? extent : 1
-        let lowerShare = mode == .mirrored ? (peak > 0 ? lowerPeak / peak : 0.5) : 0
+        let lowerShare = mode == .mirrored ? (peak > 0 ? lower / peak : 0.5) : 0
         domain = (-safeExtent * lowerShare)...(safeExtent * (1 - lowerShare))
     }
 }

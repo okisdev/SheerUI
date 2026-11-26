@@ -7,6 +7,7 @@
 - add `Meter`, `ShareBar`, `CapacityBar` and `CapacityLegend` for levels and how a total splits into parts, folding parts beyond eight into one neutral segment
 - add menu bar status items (`MenuBarLabel`, `MenuBarStack`, `MenuBarLevel`, `MenuBarBattery`) that keep their width as readings change, and the popover parts (`MenuBarPanel`, `MenuBarSection`, `MenuBarHeadline`, `MenuBarReadings`, `MenuBarRow`, `MenuBarTable`, `MenuBarColumns`, `MenuBarFootnote`, `MenuBarCommands`)
 - add `TabbedPage`, which keeps each tab's view once opened and shows `CapsuleTabs` above them
+- every menu bar part that takes a title takes a `Text` or a `LocalizedStringKey`; `MenuBarTableRow` also takes a name as is
 - `ListGroup` takes its rows' data and builds only the rows on screen
 - `Artwork` gains `.file(URL)` for the system icon of a file or app, and `.image(URL, fallback:)` for a picture by address
 - `LogView` takes a `highlight:` closure to color a line's message

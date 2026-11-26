@@ -30,6 +30,14 @@ struct DataDisplayTests {
         #expect(scale.domain == -20...80)
     }
 
+    @Test func scaleStaysFiniteWhenColumnSumsOverflow() {
+        let huge = Double.greatestFiniteMagnitude
+        let stacked = SampleChartScale(values: [[huge, huge]], mode: .stacked, ceiling: nil, minimumPeak: 1)
+        #expect(stacked.domain.upperBound.isFinite)
+        let mirrored = SampleChartScale(values: [[huge, huge, huge]], mode: .mirrored, ceiling: nil, minimumPeak: 1)
+        #expect(mirrored.domain.lowerBound.isFinite && mirrored.domain.upperBound.isFinite)
+    }
+
     @Test func mirroredFloorPreservesThePeakRatio() {
         let scale = SampleChartScale(values: [[30, 10]], mode: .mirrored, ceiling: nil, minimumPeak: 100)
         #expect(scale.domain == -25...75)

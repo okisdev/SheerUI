@@ -280,6 +280,10 @@ public struct MenuBarHeadline<Trailing: View>: View {
         self.trailing = trailing()
     }
 
+    public init(title: LocalizedStringKey, value: Text, fraction: Double?, warning: Bool = false, @ViewBuilder trailing: () -> Trailing) {
+        self.init(title: Text(title), value: value, fraction: fraction, warning: warning, trailing: trailing)
+    }
+
     public var body: some View {
         HStack(spacing: 12) {
             if let fraction {
@@ -458,7 +462,7 @@ public struct MenuBarTable<Data: RandomAccessCollection>: View where Data.Elemen
                     if let artwork = item.artwork {
                         ArtworkView(artwork, size: 18)
                     }
-                    Text(item.title)
+                    item.title
                         .foregroundStyle(.primary)
                         .lineLimit(1)
                         .truncationMode(.tail)
@@ -485,15 +489,25 @@ public struct MenuBarTable<Data: RandomAccessCollection>: View where Data.Elemen
 
 public struct MenuBarTableRow {
     let artwork: Artwork?
-    let title: String
+    let title: Text
     let values: [String]
     let open: (() -> Void)?
 
-    public init(artwork: Artwork? = nil, title: String, values: [String], open: (() -> Void)? = nil) {
+    public init(artwork: Artwork? = nil, title: Text, values: [String], open: (() -> Void)? = nil) {
         self.artwork = artwork
         self.title = title
         self.values = values
         self.open = open
+    }
+
+    public init(artwork: Artwork? = nil, title: LocalizedStringKey, values: [String], open: (() -> Void)? = nil) {
+        self.init(artwork: artwork, title: Text(title), values: values, open: open)
+    }
+
+    /// A row named by data, such as an app's name, shown as is.
+    @_disfavoredOverload
+    public init(artwork: Artwork? = nil, title: some StringProtocol, values: [String], open: (() -> Void)? = nil) {
+        self.init(artwork: artwork, title: Text(title), values: values, open: open)
     }
 }
 
@@ -505,6 +519,10 @@ public struct MenuBarColumns: View {
 
     public init(_ titles: [Text]) {
         self.titles = titles
+    }
+
+    public init(_ titles: [LocalizedStringKey]) {
+        self.init(titles.map { Text($0) })
     }
 
     public var body: some View {
