@@ -21,7 +21,7 @@ public struct ViewerSheet<Content: View>: View {
 
     /// A viewer named by data, such as a file's name, shown as is.
     @_disfavoredOverload
-    public init(title: some StringProtocol, subtitle: (some StringProtocol)? = String?.none, width: CGFloat? = nil, @ViewBuilder content: () -> Content) {
+    public init(title: String, subtitle: String? = nil, width: CGFloat? = nil, @ViewBuilder content: () -> Content) {
         self.init(title: Text(title), subtitle: subtitle.map { Text($0) }, width: width, content: content)
     }
 

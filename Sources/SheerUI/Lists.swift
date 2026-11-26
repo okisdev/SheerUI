@@ -154,8 +154,8 @@ public struct ListGroup<Trailing: View, Content: View>: View {
     }
 
     @_disfavoredOverload
-    public init(title: some StringProtocol, count: Int? = nil, @ViewBuilder trailing: () -> Trailing, @ViewBuilder content: () -> Content) {
-        self.init(title: Text(title), count: count, trailing: trailing, content: content)
+    public init(title: String? = nil, count: Int? = nil, @ViewBuilder trailing: () -> Trailing, @ViewBuilder content: () -> Content) {
+        self.init(title: title.map { Text(verbatim: $0) }, count: count, trailing: trailing, content: content)
     }
 
     public var body: some View {
@@ -244,8 +244,8 @@ extension ListGroup where Trailing == EmptyView {
     }
 
     @_disfavoredOverload
-    public init(_ title: some StringProtocol, count: Int? = nil, @ViewBuilder content: () -> Content) {
-        self.init(Text(title), count: count, content: content)
+    public init(_ title: String? = nil, count: Int? = nil, @ViewBuilder content: () -> Content) {
+        self.init(title.map { Text(verbatim: $0) }, count: count, content: content)
     }
 }
 
@@ -275,12 +275,12 @@ extension ListGroup {
 
     @_disfavoredOverload
     public init<Data: RandomAccessCollection, Row: View>(
-        _ title: some StringProtocol,
+        _ title: String? = nil,
         _ data: Data,
         @ViewBuilder trailing: () -> Trailing,
         @ViewBuilder row: @escaping (Data.Element) -> Row
     ) where Data.Element: Identifiable, Content == LazyRows<Data, Row> {
-        self.init(Text(title), data, trailing: trailing, row: row)
+        self.init(title.map { Text(verbatim: $0) }, data, trailing: trailing, row: row)
     }
 }
 
@@ -303,11 +303,11 @@ extension ListGroup where Trailing == EmptyView {
 
     @_disfavoredOverload
     public init<Data: RandomAccessCollection, Row: View>(
-        _ title: some StringProtocol,
+        _ title: String? = nil,
         _ data: Data,
         @ViewBuilder row: @escaping (Data.Element) -> Row
     ) where Data.Element: Identifiable, Content == LazyRows<Data, Row> {
-        self.init(Text(title), data, row: row)
+        self.init(title.map { Text(verbatim: $0) }, data, row: row)
     }
 }
 
@@ -468,7 +468,8 @@ public struct ListRow<Trailing: View, Actions: View>: View {
                             .foregroundStyle(.secondary)
                     }
                 case .custom(let content):
-                    content.frame(maxWidth: .infinity, alignment: .leading)
+                    HStack(spacing: 12) { content }
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 if showsActions {
                     HStack(spacing: 6) { actions }

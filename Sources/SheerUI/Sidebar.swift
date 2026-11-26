@@ -3,6 +3,7 @@ import SwiftUI
 /// The rows of a sidebar, parted into groups by space and moved through with the arrow keys.
 public struct SidebarList<Item: Hashable, Rows: View>: View {
     @Binding private var selection: Item
+    @FocusState private var focused: Bool
     private let order: [Item]
     private let rows: Rows
 
@@ -22,7 +23,9 @@ public struct SidebarList<Item: Hashable, Rows: View>: View {
         }
         .scrollIndicators(.never)
         .focusable()
+        .focused($focused)
         .focusEffectDisabled()
+        .simultaneousGesture(TapGesture().onEnded { focused = true })
         .onMoveCommand { direction in
             let next = Self.step(from: selection, in: order, direction: direction)
             guard next != selection else { return }

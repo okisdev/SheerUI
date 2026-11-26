@@ -27,7 +27,32 @@ struct ListsTests {
         _ = try size(trailing)
         _ = try size(data)
         _ = try size(dataTrailing)
-        _ = try size(ListGroup(title[...]) { Text(verbatim: "Row") })
+    }
+
+    @Test(arguments: [String?.none, "Section"])
+    func groupsAcceptOptionalStringTitles(title: String?) throws {
+        let items = [Item(id: 1), Item(id: 2)]
+        let group = ListGroup(title) { Text(verbatim: "Row") }
+        let trailing = ListGroup(title: title, trailing: { Text(verbatim: "Command") }) { Text(verbatim: "Row") }
+        let data = ListGroup(title, items) { Text($0.id, format: .number) }
+        let dataTrailing = ListGroup(title, items, trailing: { Text(verbatim: "Command") }) { Text($0.id, format: .number) }
+        let expected = title.map { Text(verbatim: $0) }
+
+        #expect(group.title == expected)
+        #expect(trailing.title == expected)
+        #expect(data.title == expected)
+        #expect(dataTrailing.title == expected)
+        _ = try size(group)
+        _ = try size(trailing)
+        _ = try size(data)
+        _ = try size(dataTrailing)
+    }
+
+    @Test(arguments: [false, true])
+    func groupsAcceptConditionalTitles(flag: Bool) throws {
+        let group = ListGroup(flag ? "A" : nil) { Text(verbatim: "Row") }
+        #expect(group.title == (flag ? Text(verbatim: "A") : nil))
+        _ = try size(group)
     }
 
     @Test func groupsLocalizeLiteralTitles() throws {
@@ -80,6 +105,7 @@ struct ListsTests {
         #expect(try size(data).height == 24)
         #expect(try size(dataTrailing).height == 24)
         #expect(try size(ListGroup { Color.clear.frame(height: 20) }).height == 24)
+        #expect(try size(ListGroup(trailing: { Color.red.frame(height: 100) }) { Color.clear.frame(height: 20) }).height == 24)
     }
 
     @Test func emptyDataGroupsKeepAZeroCount() throws {
@@ -127,6 +153,16 @@ struct ListsTests {
         #expect(try size(ListRow { Color.red.frame(height: 72) }).height == 72)
         let image = try #require(ImageRenderer(content: ListRow { Color.red.frame(width: 300, height: 12) }).nsImage)
         #expect(image.size.width == 320)
+    }
+
+    @Test func customRowsLayOutMultipleViewsSideBySide() throws {
+        let row = ListRow {
+            Color.red.frame(width: 40, height: 12)
+            Color.blue.frame(width: 60, height: 12)
+        }
+        let image = try #require(ImageRenderer(content: row).nsImage)
+        #expect(image.size.width == 132)
+        #expect(image.size.height == Metrics.listRowHeight)
     }
 
     private func size<Content: View>(_ content: Content) throws -> CGSize {
