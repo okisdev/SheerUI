@@ -100,6 +100,7 @@ public struct SidebarRow<Trailing: View>: View {
             }
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(title)
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
 }

@@ -47,6 +47,7 @@ public struct LogView: View {
     let fontSize: Double
     @Binding var follow: Bool
     var selectedID: Int?
+    var highlight: ((String) -> AttributedString?)?
     var select: (LogLine) -> Void
     @State private var seenCount = 0
     @State private var userScrolling = false
@@ -54,7 +55,7 @@ public struct LogView: View {
 
     public init(
         lines: [LogLine], query: String = "", timestamps: Bool = false, wrap: Bool = true, fontSize: Double = 12, follow: Binding<Bool>, selectedID: Int? = nil,
-        select: @escaping (LogLine) -> Void = { _ in }
+        highlight: ((String) -> AttributedString?)? = nil, select: @escaping (LogLine) -> Void = { _ in }
     ) {
         self.lines = lines
         self.query = query
@@ -63,6 +64,7 @@ public struct LogView: View {
         self.fontSize = fontSize
         _follow = follow
         self.selectedID = selectedID
+        self.highlight = highlight
         self.select = select
     }
 
@@ -87,7 +89,7 @@ public struct LogView: View {
                             LogRow(
                                 line: line, query: query, timestamps: timestamps, wrap: wrap, font: font,
                                 sourceColor: sources.count > 1 ? Self.color(for: line.source, in: sources) : nil,
-                                sourceWidth: sourceWidth, selected: line.id == selectedID
+                                sourceWidth: sourceWidth, selected: line.id == selectedID, highlight: highlight
                             )
                             .onTapGesture { select(line) }
                         }
@@ -146,6 +148,7 @@ private struct LogRow: View {
     let sourceColor: Color?
     let sourceWidth: CGFloat
     let selected: Bool
+    let highlight: ((String) -> AttributedString?)?
     @State private var hovering = false
 
     private var tone: Color? {
@@ -158,7 +161,7 @@ private struct LogRow: View {
 
     private var message: AttributedString {
         var text = AttributedString(line.message)
-        if let tone { text.foregroundColor = tone }
+        if let tone { text.foregroundColor = tone } else if let highlighted = highlight?(line.message) { text = highlighted }
         for word in query.split(separator: " ") where !word.isEmpty {
             var start = text.startIndex
             while start < text.endIndex, let range = text[start...].range(of: word, options: .caseInsensitive) {
@@ -194,7 +197,7 @@ private struct LogRow: View {
         .padding(.vertical, 1.5)
         .background(alignment: .leading) {
             ZStack(alignment: .leading) {
-                if selected { Color.accentColor.opacity(0.14) } else if hovering { Color.primary.opacity(0.04) }
+                if selected { Rectangle().fill(.tint.opacity(0.14)) } else if hovering { Color.primary.opacity(0.04) }
                 if let tone { tone.frame(width: 2).padding(.leading, Metrics.pageInset - 10) }
             }
         }

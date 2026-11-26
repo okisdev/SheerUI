@@ -82,17 +82,35 @@ private struct WindowChrome: NSViewRepresentable {
                     MainActor.assumeIsolated { self?.placeControls() }
                 }
             }
-            let watched = [window.standardWindowButton(.closeButton), window.standardWindowButton(.closeButton)?.superview?.superview].compactMap { $0 }
-            for view in watched {
-                view.postsFrameChangedNotifications = true
-                observers.append(
-                    NotificationCenter.default.addObserver(forName: NSView.frameDidChangeNotification, object: view, queue: .main) { [weak self] _ in
-                        MainActor.assumeIsolated { self?.placeControls() }
-                    })
+            // A new title lays the title bar out again after the change, so the controls are placed
+            // once that pass has run.
+            titleObservation = window.observe(\.title, options: [.new]) { [weak self] _, _ in
+                DispatchQueue.main.async { MainActor.assumeIsolated { self?.placeControls() } }
             }
+            watchControls()
         }
 
         private var placing = false
+        private var titleObservation: NSKeyValueObservation?
+        private var frameObservers: [NSObjectProtocol] = []
+        private var watched: [ObjectIdentifier] = []
+
+        /// Follows the frames of the controls and their container, and follows the new ones when
+        /// AppKit replaces them, which it does when it rebuilds the title bar.
+        private func watchControls() {
+            guard let window else { return }
+            let views = [window.standardWindowButton(.closeButton), window.standardWindowButton(.closeButton)?.superview?.superview].compactMap { $0 }
+            let identities = views.map(ObjectIdentifier.init)
+            guard identities != watched else { return }
+            watched = identities
+            for observer in frameObservers { NotificationCenter.default.removeObserver(observer) }
+            frameObservers = views.map { view in
+                view.postsFrameChangedNotifications = true
+                return NotificationCenter.default.addObserver(forName: NSView.frameDidChangeNotification, object: view, queue: .main) { [weak self] _ in
+                    MainActor.assumeIsolated { self?.placeControls() }
+                }
+            }
+        }
 
         private func placeControls() {
             guard
@@ -105,6 +123,7 @@ private struct WindowChrome: NSViewRepresentable {
             else { return }
             placing = true
             defer { placing = false }
+            watchControls()
             let height = Metrics.sidebarTop - 6
             var frame = container.frame
             frame.size.height = height
@@ -120,7 +139,7 @@ private struct WindowChrome: NSViewRepresentable {
         }
 
         isolated deinit {
-            for observer in observers { NotificationCenter.default.removeObserver(observer) }
+            for observer in observers + frameObservers { NotificationCenter.default.removeObserver(observer) }
         }
     }
 }

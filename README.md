@@ -9,7 +9,7 @@ The Swift package for macOS lives at the repository root. Libraries for other pl
 Add the package in Xcode or in `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/okisdev/SheerUI", from: "0.1.1")
+.package(url: "https://github.com/okisdev/SheerUI", from: "0.1.2")
 ```
 
 Then depend on the `SheerUI` product. SheerUI requires macOS 15 or later. An app that also targets iOS depends on it for macOS only:
@@ -23,12 +23,14 @@ Then depend on the `SheerUI` product. SheerUI requires macOS 15 or later. An app
 | Area | Components |
 | --- | --- |
 | Window | `windowChrome()`, `windowChromeBackground()`, `sheetSurface()`, `SidebarRow`, `SidebarRowLabel` |
-| Pages | `Page`, `DrillPage`, `ListPage`, `PageHeader`, `pageCommands(_:)`, `tabAccessory(_:_:)` |
+| Pages | `Page`, `DrillPage`, `ListPage`, `TabbedPage`, `PageHeader`, `pageCommands(_:)`, `tabAccessory(_:_:)` |
 | Lists | `GroupedList`, `ListGroup`, `ListRow`, `DisclosureRow`, `StateDot`, `EmptyLine` |
 | Controls | `CircleButtonStyle`, `CapsuleButtonStyle`, `CapsuleTabs`, `CapsuleSearchField`, `ActionCapsule`, `DestructiveButton` |
 | Menus | `PopUpMenu`, `CircleMenu`, `MenuCapsule`, `MenuPicker` |
 | Forms and sheets | `CardsFormStyle` (`.formStyle(.cards)`), `FormSheet`, `FieldRow`, `InfoRow`, `KeyValueTable`, `SettingsNotice`, `SettingsSliderRow`, `ViewerSheet` |
 | States | `EmptyState`, `LoadingState`, `PlaceholderRows`, `FormPlaceholder`, `DotMatrix`, `StepRow`, `ProgressLine`, `Toasts`, `Clipboard` |
+| Data | `SampleChart`, `ChartSeries`, `ChartPalette`, `Figures`, `Figure`, `Meter`, `ShareBar`, `CapacityBar`, `CapacityLegend` |
+| Menu bar | `MenuBarLabel`, `MenuBarStack`, `MenuBarLevel`, `MenuBarBattery`, `MenuBarPanel`, `MenuBarSection`, `MenuBarHeadline`, `MenuBarReadings`, `MenuBarRow`, `MenuBarTable`, `MenuBarColumns`, `MenuBarFootnote`, `MenuBarCommands` |
 | Content | `FileBrowser`, `LogView`, `Artwork`, `ArtworkView` |
 
 Metrics, grounds and text roles are in `Sources/SheerUI/Tokens.swift`.
