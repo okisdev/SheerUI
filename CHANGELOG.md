@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.3
+
+- add `SidebarWindow`, a sidebar on the window's material beside content on the inset sheet, with a draggable top strip and a minimum size
+- `SidebarWindow(sidebarWidth:)` takes `.fixed`, `.fixed(_:)`, `.resizable` or `.resizable(ideal:range:)`; a resizable sidebar is dragged by its edge under a column resize pointer, shows a short grabber only while the pointer is on it, returns to its ideal width on a double click, and remembers its width per window
+- add `SidebarList`, sidebar rows parted by space that the arrow keys move through
+- `CapsuleButtonStyle` takes a weight (`plain`, `prominent`, `ink`) and a size; `.capsule(size:)` and `.inkCapsule` join `.capsule` and `.prominentCapsule`
+- `FormSheet` finishes with an ink capsule, since ink fills only the command that completes a task
+- `CapsuleTabs` takes a VoiceOver label, read as one picker, and a size
+- `ListGroup` titles are `Text` with `LocalizedStringKey` overloads; a string is still shown as is
+- `ListRow` takes `selected:` and a custom content builder, keeping its hover commands and Return or Space to open
+- `ViewerSheet` titles are `Text` with `LocalizedStringKey` overloads, and it takes an optional `width:`
+- the library's own words in Arabic and Hindi, for 13 languages
+
 ## 0.1.2
 
 - add `SampleChart`, `ChartSeries` and `ChartPalette` for bars over time, stacked or mirrored around zero, with a hover tooltip and an optional fixed span that ends at the newest sample

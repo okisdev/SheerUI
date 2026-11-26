@@ -1,5 +1,48 @@
 import SwiftUI
 
+/// The rows of a sidebar, parted into groups by space and moved through with the arrow keys.
+public struct SidebarList<Item: Hashable, Rows: View>: View {
+    @Binding private var selection: Item
+    @FocusState private var focused: Bool
+    private let order: [Item]
+    private let rows: Rows
+
+    public init(selection: Binding<Item>, order: [Item], @ViewBuilder rows: () -> Rows) {
+        _selection = selection
+        self.order = order
+        self.rows = rows()
+    }
+
+    public var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 12) {
+                rows
+            }
+            .padding(.horizontal, 10)
+            .padding(.bottom, 10)
+        }
+        .scrollIndicators(.never)
+        .focusable()
+        .focused($focused)
+        .focusEffectDisabled()
+        .simultaneousGesture(TapGesture().onEnded { focused = true })
+        .onMoveCommand { direction in
+            let next = Self.step(from: selection, in: order, direction: direction)
+            guard next != selection else { return }
+            selection = next
+        }
+    }
+
+    nonisolated static func step(from selection: Item, in order: [Item], direction: MoveCommandDirection) -> Item {
+        guard let index = order.firstIndex(of: selection) else { return selection }
+        switch direction {
+        case .up where index > 0: return order[index - 1]
+        case .down where index < order.count - 1: return order[index + 1]
+        default: return selection
+        }
+    }
+}
+
 /// The sizes a sidebar row takes from the Sidebar icon size chosen in System Settings > Appearance, as the system's own sidebars do.
 private struct SidebarScale {
     let font: Font

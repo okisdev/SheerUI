@@ -41,24 +41,38 @@ extension ButtonStyle where Self == CircleButtonStyle {
     public static func circle(selected: Bool) -> CircleButtonStyle { CircleButtonStyle(selected: selected) }
 }
 
-/// A capsule button: soft for most commands, filled with the accent only for the one move a state calls for.
+/// A capsule button: soft for most commands, accented for emphasis, or filled with ink to complete a task.
 public struct CapsuleButtonStyle: ButtonStyle {
-    var prominent = false
+    public enum Weight: Sendable { case plain, prominent, ink }
+
+    var weight: Weight
+    var size: CGFloat
     @Environment(\.isEnabled) private var enabled
     @State private var hovering = false
 
-    public init(prominent: Bool = false) {
-        self.prominent = prominent
+    public init(weight: Weight = .plain, size: CGFloat = Metrics.control) {
+        self.weight = weight
+        self.size = size
+    }
+
+    public init(prominent: Bool) {
+        self.init(weight: prominent ? .prominent : .plain)
     }
 
     public func makeBody(configuration: Configuration) -> some View {
-        configuration.label
+        let foreground: AnyShapeStyle =
+            switch weight {
+            case .plain: AnyShapeStyle(.primary)
+            case .prominent: AnyShapeStyle(.white)
+            case .ink: AnyShapeStyle(Color(nsColor: .textBackgroundColor))
+            }
+        return configuration.label
             .font(.body.weight(.medium))
-            .foregroundStyle(prominent ? AnyShapeStyle(.white) : AnyShapeStyle(.primary))
-            .padding(.horizontal, 16)
-            .frame(height: Metrics.control)
+            .foregroundStyle(foreground)
+            .padding(.horizontal, size < Metrics.control ? 12 : 16)
+            .frame(height: size)
             .background(fill(pressed: configuration.isPressed), in: .capsule)
-            .opacity(enabled ? 1 : 0.45)
+            .opacity(enabled ? 1 : weight == .ink ? 0.4 : 0.45)
             .scaleEffect(configuration.isPressed ? 0.97 : 1)
             .contentShape(.capsule)
             .animation(.easeOut(duration: 0.12), value: hovering)
@@ -67,14 +81,19 @@ public struct CapsuleButtonStyle: ButtonStyle {
     }
 
     private func fill(pressed: Bool) -> AnyShapeStyle {
-        if prominent { return AnyShapeStyle(.tint.opacity(pressed ? 0.8 : hovering ? 0.92 : 1)) }
-        return AnyShapeStyle(Color.primary.opacity(pressed ? 0.14 : hovering ? 0.1 : 0.06))
+        switch weight {
+        case .plain: AnyShapeStyle(Color.primary.opacity(pressed ? 0.14 : hovering ? 0.1 : 0.06))
+        case .prominent: AnyShapeStyle(.tint.opacity(pressed ? 0.8 : hovering ? 0.92 : 1))
+        case .ink: AnyShapeStyle(Color.primary.opacity(pressed ? 0.8 : hovering ? 0.92 : 1))
+        }
     }
 }
 
 extension ButtonStyle where Self == CapsuleButtonStyle {
     public static var capsule: CapsuleButtonStyle { CapsuleButtonStyle() }
-    public static var prominentCapsule: CapsuleButtonStyle { CapsuleButtonStyle(prominent: true) }
+    public static func capsule(size: CGFloat) -> CapsuleButtonStyle { CapsuleButtonStyle(size: size) }
+    public static var prominentCapsule: CapsuleButtonStyle { CapsuleButtonStyle(weight: .prominent) }
+    public static var inkCapsule: CapsuleButtonStyle { CapsuleButtonStyle(weight: .ink) }
 }
 
 /// The page's search: a capsule field that Command F focuses and Escape clears.
@@ -128,21 +147,51 @@ public struct CapsuleSearchField: View {
 
 /// Views of one subject as capsule segments: the chosen one on a raised fill.
 public struct CapsuleTabs<Value: Hashable>: View {
+    var label: Text?
     let options: [(value: Value, title: Text)]
     @Binding var selection: Value
+    var size: CGFloat
     @Namespace private var namespace
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    public init(options: [(value: Value, title: LocalizedStringKey)], selection: Binding<Value>) {
-        self.init(options: options.map { ($0.value, Text($0.title)) }, selection: selection)
+    public init(
+        _ label: LocalizedStringKey, options: [(value: Value, title: LocalizedStringKey)], selection: Binding<Value>, size: CGFloat = Metrics.control
+    ) {
+        self.init(Text(label), options: options.map { ($0.value, Text($0.title)) }, selection: selection, size: size)
     }
 
-    public init(options: [(value: Value, title: Text)], selection: Binding<Value>) {
+    public init(_ label: Text, options: [(value: Value, title: Text)], selection: Binding<Value>, size: CGFloat = Metrics.control) {
+        self.init(options: options, selection: selection, size: size)
+        self.label = label
+    }
+
+    public init(options: [(value: Value, title: LocalizedStringKey)], selection: Binding<Value>, size: CGFloat = Metrics.control) {
+        self.init(options: options.map { ($0.value, Text($0.title)) }, selection: selection, size: size)
+    }
+
+    public init(options: [(value: Value, title: Text)], selection: Binding<Value>, size: CGFloat = Metrics.control) {
         self.options = options
         self._selection = selection
+        self.size = size
     }
 
     public var body: some View {
+        if let label {
+            tabs.accessibilityRepresentation {
+                Picker(selection: $selection) {
+                    ForEach(options, id: \.value) { option in
+                        option.title.tag(option.value)
+                    }
+                } label: {
+                    label
+                }
+            }
+        } else {
+            tabs
+        }
+    }
+
+    private var tabs: some View {
         HStack(spacing: 2) {
             ForEach(Array(options.enumerated()), id: \.offset) { _, option in
                 let chosen = option.value == selection
@@ -153,7 +202,7 @@ public struct CapsuleTabs<Value: Hashable>: View {
                         .font(.body.weight(.medium))
                         .foregroundStyle(chosen ? .primary : .secondary)
                         .padding(.horizontal, 14)
-                        .frame(height: Metrics.control - 4)
+                        .frame(height: size - 4)
                         .background {
                             if chosen {
                                 Capsule()
@@ -169,6 +218,7 @@ public struct CapsuleTabs<Value: Hashable>: View {
             }
         }
         .padding(2)
+        .frame(height: size)
         .background(Color.primary.opacity(0.06), in: .capsule)
         .fixedSize()
     }
