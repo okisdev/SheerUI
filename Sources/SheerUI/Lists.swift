@@ -136,24 +136,33 @@ public struct GroupedList<Content: View>: View {
 
 /// A run of rows on a soft card, parted by inset hairlines, under an optional name with its count and at most one trailing command. Groups give a list its order without boxing every row.
 public struct ListGroup<Trailing: View, Content: View>: View {
-    var title: String?
+    var title: Text?
     var count: Int?
     @ViewBuilder let trailing: Trailing
     @ViewBuilder let content: Content
     @State private var reservesDisclosure = false
 
-    public init(title: String? = nil, count: Int? = nil, @ViewBuilder trailing: () -> Trailing, @ViewBuilder content: () -> Content) {
+    public init(title: Text? = nil, count: Int? = nil, @ViewBuilder trailing: () -> Trailing, @ViewBuilder content: () -> Content) {
         self.title = title
         self.count = count
         self.trailing = trailing()
         self.content = content()
     }
 
+    public init(title: LocalizedStringKey, count: Int? = nil, @ViewBuilder trailing: () -> Trailing, @ViewBuilder content: () -> Content) {
+        self.init(title: Text(title), count: count, trailing: trailing, content: content)
+    }
+
+    @_disfavoredOverload
+    public init(title: some StringProtocol, count: Int? = nil, @ViewBuilder trailing: () -> Trailing, @ViewBuilder content: () -> Content) {
+        self.init(title: Text(title), count: count, trailing: trailing, content: content)
+    }
+
     public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             if let title {
                 HStack(spacing: 6) {
-                    Text(title).foregroundStyle(.primary)
+                    title.foregroundStyle(.primary)
                     if let count { Text(count, format: .number).foregroundStyle(.tertiary).monospacedDigit() }
                     Spacer(minLength: 8)
                     trailing
@@ -226,8 +235,17 @@ public struct DisclosureRow<Row: View, Children: View>: View {
 }
 
 extension ListGroup where Trailing == EmptyView {
-    public init(_ title: String? = nil, count: Int? = nil, @ViewBuilder content: () -> Content) {
+    public init(_ title: Text? = nil, count: Int? = nil, @ViewBuilder content: () -> Content) {
         self.init(title: title, count: count, trailing: { EmptyView() }, content: content)
+    }
+
+    public init(_ title: LocalizedStringKey, count: Int? = nil, @ViewBuilder content: () -> Content) {
+        self.init(Text(title), count: count, content: content)
+    }
+
+    @_disfavoredOverload
+    public init(_ title: some StringProtocol, count: Int? = nil, @ViewBuilder content: () -> Content) {
+        self.init(Text(title), count: count, content: content)
     }
 }
 
@@ -236,7 +254,7 @@ extension ListGroup {
     /// counts itself and builds only the rows the person can see, which is what a list of every
     /// process or package needs: the eager form resolves every row on every change.
     public init<Data: RandomAccessCollection, Row: View>(
-        _ title: String? = nil,
+        _ title: Text? = nil,
         _ data: Data,
         @ViewBuilder trailing: () -> Trailing,
         @ViewBuilder row: @escaping (Data.Element) -> Row
@@ -245,15 +263,51 @@ extension ListGroup {
             LazyRows(data: data, row: row)
         }
     }
+
+    public init<Data: RandomAccessCollection, Row: View>(
+        _ title: LocalizedStringKey,
+        _ data: Data,
+        @ViewBuilder trailing: () -> Trailing,
+        @ViewBuilder row: @escaping (Data.Element) -> Row
+    ) where Data.Element: Identifiable, Content == LazyRows<Data, Row> {
+        self.init(Text(title), data, trailing: trailing, row: row)
+    }
+
+    @_disfavoredOverload
+    public init<Data: RandomAccessCollection, Row: View>(
+        _ title: some StringProtocol,
+        _ data: Data,
+        @ViewBuilder trailing: () -> Trailing,
+        @ViewBuilder row: @escaping (Data.Element) -> Row
+    ) where Data.Element: Identifiable, Content == LazyRows<Data, Row> {
+        self.init(Text(title), data, trailing: trailing, row: row)
+    }
 }
 
 extension ListGroup where Trailing == EmptyView {
     public init<Data: RandomAccessCollection, Row: View>(
-        _ title: String? = nil,
+        _ title: Text? = nil,
         _ data: Data,
         @ViewBuilder row: @escaping (Data.Element) -> Row
     ) where Data.Element: Identifiable, Content == LazyRows<Data, Row> {
         self.init(title, data, trailing: { EmptyView() }, row: row)
+    }
+
+    public init<Data: RandomAccessCollection, Row: View>(
+        _ title: LocalizedStringKey,
+        _ data: Data,
+        @ViewBuilder row: @escaping (Data.Element) -> Row
+    ) where Data.Element: Identifiable, Content == LazyRows<Data, Row> {
+        self.init(Text(title), data, row: row)
+    }
+
+    @_disfavoredOverload
+    public init<Data: RandomAccessCollection, Row: View>(
+        _ title: some StringProtocol,
+        _ data: Data,
+        @ViewBuilder row: @escaping (Data.Element) -> Row
+    ) where Data.Element: Identifiable, Content == LazyRows<Data, Row> {
+        self.init(Text(title), data, row: row)
     }
 }
 
@@ -325,14 +379,14 @@ public struct StateDot: View {
 
 /// A list row: optional artwork for what the row is (carrying the state dot on its foot) or a bare state dot, the name over an optional meta line, then its trailing value, followed by the row's commands while the pointer or the keyboard is on it. Clicking the row, or Return or Space while it has focus, opens it.
 public struct ListRow<Trailing: View, Actions: View>: View {
-    var dot: Color?
-    var artwork: Artwork?
-    let title: String
-    let meta: String
-    var metaIsError = false
-    var truncation: Text.TruncationMode = .tail
+    private enum Content {
+        case standard(dot: Color?, artwork: Artwork?, title: String, meta: String, metaIsError: Bool, truncation: Text.TruncationMode, trailing: Trailing)
+        case custom(Trailing)
+    }
+
+    private let content: Content
+    var selected: Bool
     var open: (() -> Void)?
-    @ViewBuilder let trailing: Trailing
     @ViewBuilder let actions: Actions
     @State private var hovering = false
     @FocusState private var focused: Bool
@@ -343,16 +397,21 @@ public struct ListRow<Trailing: View, Actions: View>: View {
 
     public init(
         dot: Color? = nil, artwork: Artwork? = nil, title: String, meta: String, metaIsError: Bool = false, truncation: Text.TruncationMode = .tail,
-        open: (() -> Void)? = nil, @ViewBuilder trailing: () -> Trailing, @ViewBuilder actions: () -> Actions
+        selected: Bool = false, open: (() -> Void)? = nil, @ViewBuilder trailing: () -> Trailing, @ViewBuilder actions: () -> Actions
     ) {
-        self.dot = dot
-        self.artwork = artwork
-        self.title = title
-        self.meta = meta
-        self.metaIsError = metaIsError
-        self.truncation = truncation
+        self.content = .standard(
+            dot: dot, artwork: artwork, title: title, meta: meta, metaIsError: metaIsError, truncation: truncation, trailing: trailing())
+        self.selected = selected
         self.open = open
-        self.trailing = trailing()
+        self.actions = actions()
+    }
+
+    public init(
+        selected: Bool = false, open: (() -> Void)? = nil, @ViewBuilder content: () -> Trailing, @ViewBuilder actions: () -> Actions
+    ) {
+        self.content = .custom(content())
+        self.selected = selected
+        self.open = open
         self.actions = actions()
     }
 
@@ -379,30 +438,38 @@ public struct ListRow<Trailing: View, Actions: View>: View {
             } else if reservesDisclosure {
                 Color.clear.frame(width: Metrics.disclosureColumn, height: 1)
             }
-            Group {
-                if let artwork {
-                    ArtworkView(artwork, size: nested ? Metrics.nestedRowArtwork : Metrics.rowArtwork, badge: dot)
-                } else if let dot {
-                    StateDot(color: dot)
-                }
-            }
-            .preference(key: ListRowLeading.self, value: artwork != nil ? (nested ? Metrics.nestedRowArtwork : Metrics.rowArtwork) : StateDot.size)
-            VStack(alignment: .leading, spacing: nested ? 2 : 3) {
-                Text(title)
-                    .font(nested ? .callout : .rowTitle)
-                    .lineLimit(1)
-                    .truncationMode(truncation)
-                if !meta.isEmpty {
-                    Text(meta)
-                        .font(.rowMeta)
-                        .foregroundStyle(metaIsError ? AnyShapeStyle(.red) : AnyShapeStyle(.secondary))
-                        .lineLimit(1)
-                }
-            }
-            Spacer(minLength: 8)
             HStack(spacing: 10) {
-                trailing
-                    .foregroundStyle(.secondary)
+                switch content {
+                case .standard(let dot, let artwork, let title, let meta, let metaIsError, let truncation, let trailing):
+                    HStack(spacing: 12) {
+                        Group {
+                            if let artwork {
+                                ArtworkView(artwork, size: nested ? Metrics.nestedRowArtwork : Metrics.rowArtwork, badge: dot)
+                            } else if let dot {
+                                StateDot(color: dot)
+                            }
+                        }
+                        .preference(
+                            key: ListRowLeading.self, value: artwork != nil ? (nested ? Metrics.nestedRowArtwork : Metrics.rowArtwork) : StateDot.size)
+                        VStack(alignment: .leading, spacing: nested ? 2 : 3) {
+                            Text(title)
+                                .font(nested ? .callout : .rowTitle)
+                                .lineLimit(1)
+                                .truncationMode(truncation)
+                            if !meta.isEmpty {
+                                Text(meta)
+                                    .font(.rowMeta)
+                                    .foregroundStyle(metaIsError ? AnyShapeStyle(.red) : AnyShapeStyle(.secondary))
+                                    .lineLimit(1)
+                            }
+                        }
+                        Spacer(minLength: 8)
+                        trailing
+                            .foregroundStyle(.secondary)
+                    }
+                case .custom(let content):
+                    content.frame(maxWidth: .infinity, alignment: .leading)
+                }
                 if showsActions {
                     HStack(spacing: 6) { actions }
                         .buttonStyle(.circle(size: Metrics.rowControl))
@@ -412,7 +479,7 @@ public struct ListRow<Trailing: View, Actions: View>: View {
         }
         .padding(.horizontal, 10)
         .frame(minHeight: nested ? Metrics.nestedRowHeight : Metrics.listRowHeight)
-        .background(active ? Color.primary.opacity(focused ? 0.07 : 0.045) : .clear, in: .rect(cornerRadius: 10))
+        .background(selected ? .selectedFill : focused ? Color.primary.opacity(0.07) : hovering ? .hoverFill : .clear, in: .rect(cornerRadius: 10))
         .contentShape(.rect(cornerRadius: 10))
         .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: active)
         .onHover { hovering = $0 }
@@ -438,6 +505,7 @@ public struct ListRow<Trailing: View, Actions: View>: View {
         }
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(primary == nil ? [] : .isButton)
+        .accessibilityAddTraits(selected ? .isSelected : [])
         .accessibilityValue(
             disclosure.map { $0.wrappedValue ? Text(String(localized: "Expanded", bundle: .module)) : Text(String(localized: "Collapsed", bundle: .module)) }
                 ?? Text(verbatim: "")
@@ -449,11 +517,16 @@ public struct ListRow<Trailing: View, Actions: View>: View {
 extension ListRow where Actions == EmptyView {
     public init(
         dot: Color? = nil, artwork: Artwork? = nil, title: String, meta: String, metaIsError: Bool = false, truncation: Text.TruncationMode = .tail,
-        open: (() -> Void)? = nil, @ViewBuilder trailing: () -> Trailing
+        selected: Bool = false, open: (() -> Void)? = nil, @ViewBuilder trailing: () -> Trailing
     ) {
         self.init(
-            dot: dot, artwork: artwork, title: title, meta: meta, metaIsError: metaIsError, truncation: truncation, open: open, trailing: trailing,
+            dot: dot, artwork: artwork, title: title, meta: meta, metaIsError: metaIsError, truncation: truncation, selected: selected, open: open,
+            trailing: trailing,
             actions: { EmptyView() })
+    }
+
+    public init(selected: Bool = false, open: (() -> Void)? = nil, @ViewBuilder content: () -> Trailing) {
+        self.init(selected: selected, open: open, content: content, actions: { EmptyView() })
     }
 }
 

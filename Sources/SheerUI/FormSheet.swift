@@ -87,7 +87,7 @@ public struct FormSheet<Content: View, Secondary: View>: View {
                 .keyboardShortcut(.cancelAction)
                 .disabled(working != nil)
                 Button(action: finish) { action }
-                    .buttonStyle(.prominentCapsule)
+                    .buttonStyle(.inkCapsule)
                     .keyboardShortcut(.defaultAction)
                     .disabled(!canFinish || working != nil)
             }

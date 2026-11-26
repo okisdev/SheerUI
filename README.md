@@ -9,7 +9,7 @@ The Swift package for macOS lives at the repository root. Libraries for other pl
 Add the package in Xcode or in `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/okisdev/SheerUI", from: "0.1.2")
+.package(url: "https://github.com/okisdev/SheerUI", from: "0.1.3")
 ```
 
 Then depend on the `SheerUI` product. SheerUI requires macOS 15 or later. An app that also targets iOS depends on it for macOS only:
@@ -22,7 +22,7 @@ Then depend on the `SheerUI` product. SheerUI requires macOS 15 or later. An app
 
 | Area | Components |
 | --- | --- |
-| Window | `windowChrome()`, `windowChromeBackground()`, `sheetSurface()`, `SidebarRow`, `SidebarRowLabel` |
+| Window | `SidebarWindow`, `SidebarList`, `windowChrome()`, `windowChromeBackground()`, `sheetSurface()`, `SidebarRow`, `SidebarRowLabel` |
 | Pages | `Page`, `DrillPage`, `ListPage`, `TabbedPage`, `PageHeader`, `pageCommands(_:)`, `tabAccessory(_:_:)` |
 | Lists | `GroupedList`, `ListGroup`, `ListRow`, `DisclosureRow`, `StateDot`, `EmptyLine` |
 | Controls | `CircleButtonStyle`, `CapsuleButtonStyle`, `CapsuleTabs`, `CapsuleSearchField`, `ActionCapsule`, `DestructiveButton` |
@@ -37,7 +37,7 @@ Metrics, grounds and text roles are in `Sources/SheerUI/Tokens.swift`.
 
 ## Text and localization
 
-Every title a caller passes is a `Text`, so it resolves in the caller's own bundle. Each component also takes a `LocalizedStringKey`, which resolves in the main bundle. The words SheerUI draws itself (Cancel, Back, Search, and the file browser's commands) come from its own string catalog in English, German, Spanish, French, Italian, Japanese, Korean, Brazilian Portuguese, Russian, and Simplified and Traditional Chinese.
+Every title a caller passes is a `Text`, so it resolves in the caller's own bundle. Each component also takes a `LocalizedStringKey`, which resolves in the main bundle. The words SheerUI draws itself (Cancel, Back, Search, and the file browser's commands) come from its own string catalog in English, Arabic, German, Spanish, French, Hindi, Italian, Japanese, Korean, Brazilian Portuguese, Russian, and Simplified and Traditional Chinese.
 
 ## Development
 

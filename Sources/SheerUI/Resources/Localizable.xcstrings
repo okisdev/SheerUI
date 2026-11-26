@@ -3,6 +3,12 @@
   "strings" : {
     "%lld new" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld جديد"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19,6 +25,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld nouvelles"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld नए"
           }
         },
         "it" : {
@@ -67,6 +79,12 @@
     },
     "%llds" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ث"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -83,6 +101,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld s"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld से॰"
           }
         },
         "it" : {
@@ -131,6 +155,12 @@
     },
     "Ascending" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تصاعدي"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -147,6 +177,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Croissant"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आरोही"
           }
         },
         "it" : {
@@ -195,6 +231,12 @@
     },
     "Back" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رجوع"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -211,6 +253,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Retour"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "वापस"
           }
         },
         "it" : {
@@ -259,6 +307,12 @@
     },
     "Back to %@" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رجوع إلى %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -275,6 +329,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Revenir à %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ पर वापस जाएँ"
           }
         },
         "it" : {
@@ -323,6 +383,12 @@
     },
     "Battery" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "البطارية"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -339,6 +405,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Batterie"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "बैटरी"
           }
         },
         "it" : {
@@ -387,6 +459,12 @@
     },
     "Battery, charging" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "البطارية، قيد الشحن"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -403,6 +481,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Batterie, en charge"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "बैटरी, चार्ज हो रही है"
           }
         },
         "it" : {
@@ -451,6 +535,12 @@
     },
     "Cancel" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إلغاء"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -467,6 +557,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Annuler"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रद्द करें"
           }
         },
         "it" : {
@@ -515,6 +611,12 @@
     },
     "Cannot Read Folder" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يتعذر قراءة المجلد"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -531,6 +633,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impossible de lire le dossier"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ोल्डर पढ़ा नहीं जा सकता"
           }
         },
         "it" : {
@@ -579,6 +687,12 @@
     },
     "Clear Search" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مسح البحث"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -595,6 +709,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Effacer la recherche"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "खोज साफ़ करें"
           }
         },
         "it" : {
@@ -643,6 +763,12 @@
     },
     "Close" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إغلاق"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -659,6 +785,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fermer"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "बंद करें"
           }
         },
         "it" : {
@@ -707,6 +839,12 @@
     },
     "Collapsed" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مطوي"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -723,6 +861,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Réduit"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "संक्षिप्त"
           }
         },
         "it" : {
@@ -771,6 +915,12 @@
     },
     "Copied" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم النسخ"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -787,6 +937,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copié"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कॉपी किया गया"
           }
         },
         "it" : {
@@ -835,6 +991,12 @@
     },
     "Copied path" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم نسخ المسار"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -851,6 +1013,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chemin copié"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पथ कॉपी किया गया"
           }
         },
         "it" : {
@@ -899,6 +1067,12 @@
     },
     "Copy" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخ"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -915,6 +1089,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copier"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कॉपी करें"
           }
         },
         "it" : {
@@ -963,6 +1143,12 @@
     },
     "Copy Path" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخ المسار"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -979,6 +1165,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copier le chemin"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पथ कॉपी करें"
           }
         },
         "it" : {
@@ -1027,6 +1219,12 @@
     },
     "Date Modified" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تاريخ التعديل"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1043,6 +1241,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Date de modification"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "संशोधन की तिथि"
           }
         },
         "it" : {
@@ -1091,6 +1295,12 @@
     },
     "Descending" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تنازلي"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1107,6 +1317,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Décroissant"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अवरोही"
           }
         },
         "it" : {
@@ -1155,6 +1371,12 @@
     },
     "Done" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1171,6 +1393,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Terminé"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "हो गया"
           }
         },
         "it" : {
@@ -1219,6 +1447,12 @@
     },
     "Empty Folder" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مجلد فارغ"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1235,6 +1469,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dossier vide"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ख़ाली फ़ोल्डर"
           }
         },
         "it" : {
@@ -1283,6 +1523,12 @@
     },
     "Enclosing Folder" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المجلد الأصلي"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1299,6 +1545,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dossier parent"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "मूल फ़ोल्डर"
           }
         },
         "it" : {
@@ -1347,6 +1599,12 @@
     },
     "Expanded" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "موسّع"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1363,6 +1621,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Développé"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "विस्तारित"
           }
         },
         "it" : {
@@ -1411,6 +1675,12 @@
     },
     "Failed" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فشل"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1427,6 +1697,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Échec"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "विफल"
           }
         },
         "it" : {
@@ -1475,6 +1751,12 @@
     },
     "File" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ملف"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1491,6 +1773,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fichier"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ाइल"
           }
         },
         "it" : {
@@ -1539,6 +1827,12 @@
     },
     "Files Unavailable" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الملفات غير متوفرة"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1555,6 +1849,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fichiers indisponibles"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ाइलें उपलब्ध नहीं हैं"
           }
         },
         "it" : {
@@ -1603,6 +1903,12 @@
     },
     "Find" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بحث"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1619,6 +1925,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rechercher"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ढूँढें"
           }
         },
         "it" : {
@@ -1667,6 +1979,12 @@
     },
     "Folder" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مجلد"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1683,6 +2001,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dossier"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ोल्डर"
           }
         },
         "it" : {
@@ -1731,6 +2055,12 @@
     },
     "Folder path" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مسار المجلد"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1747,6 +2077,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chemin du dossier"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ोल्डर पथ"
           }
         },
         "it" : {
@@ -1795,6 +2131,12 @@
     },
     "In progress" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قيد التقدم"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1811,6 +2153,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "En cours"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "प्रगति में"
           }
         },
         "it" : {
@@ -1859,6 +2207,12 @@
     },
     "Jump to Latest" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الانتقال إلى الأحدث"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1875,6 +2229,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aller au plus récent"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नवीनतम पर जाएँ"
           }
         },
         "it" : {
@@ -1923,6 +2283,12 @@
     },
     "Kind" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "النوع"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1939,6 +2305,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Type"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "प्रकार"
           }
         },
         "it" : {
@@ -1987,6 +2359,12 @@
     },
     "Loading" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جارٍ التحميل"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2003,6 +2381,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chargement"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "लोड हो रहा है"
           }
         },
         "it" : {
@@ -2051,6 +2435,12 @@
     },
     "Move to Trash" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نقل إلى سلة المهملات"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2067,6 +2457,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Placer dans la corbeille"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ट्रैश में ले जाएँ"
           }
         },
         "it" : {
@@ -2115,6 +2511,12 @@
     },
     "Name" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاسم"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2131,6 +2533,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nom"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नाम"
           }
         },
         "it" : {
@@ -2179,6 +2587,12 @@
     },
     "No Matches" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا توجد تطابقات"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2195,6 +2609,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aucun résultat"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कोई मिलान नहीं"
           }
         },
         "it" : {
@@ -2243,6 +2663,12 @@
     },
     "Nothing in this folder matches “%@”." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد في هذا المجلد ما يطابق “%@”."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2259,6 +2685,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rien dans ce dossier ne correspond à « %@ »."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस फ़ोल्डर में “%@” से कुछ भी मेल नहीं खाता।"
           }
         },
         "it" : {
@@ -2307,6 +2739,12 @@
     },
     "OK" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حسنًا"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2323,6 +2761,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ठीक है"
           }
         },
         "it" : {
@@ -2371,6 +2815,12 @@
     },
     "Open in Terminal" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فتح في Terminal"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2387,6 +2837,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ouvrir dans Terminal"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminal में खोलें"
           }
         },
         "it" : {
@@ -2435,6 +2891,12 @@
     },
     "Order" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الترتيب"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2451,6 +2913,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ordre"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्रम"
           }
         },
         "it" : {
@@ -2499,6 +2967,12 @@
     },
     "Permission Denied" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم رفض الإذن"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2515,6 +2989,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Autorisation refusée"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अनुमति अस्वीकृत"
           }
         },
         "it" : {
@@ -2563,6 +3043,12 @@
     },
     "Quick Look" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نظرة سريعة"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2579,6 +3065,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Coup d’œil"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्विक लुक"
           }
         },
         "it" : {
@@ -2627,6 +3119,12 @@
     },
     "Reading Files" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جارٍ قراءة الملفات"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2643,6 +3141,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lecture des fichiers"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ाइलें पढ़ी जा रही हैं"
           }
         },
         "it" : {
@@ -2691,6 +3195,12 @@
     },
     "Refresh" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحديث"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2707,6 +3217,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Actualiser"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रीफ़्रेश करें"
           }
         },
         "it" : {
@@ -2755,6 +3271,12 @@
     },
     "Search" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بحث"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2771,6 +3293,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rechercher"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "खोजें"
           }
         },
         "it" : {
@@ -2819,6 +3347,12 @@
     },
     "Show in Finder" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إظهار في Finder"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2835,6 +3369,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Afficher dans le Finder"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finder में दिखाएँ"
           }
         },
         "it" : {
@@ -2883,6 +3423,12 @@
     },
     "Size" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الحجم"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2899,6 +3445,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Taille"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आकार"
           }
         },
         "it" : {
@@ -2947,6 +3499,12 @@
     },
     "Sort By" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فرز حسب"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2963,6 +3521,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trier par"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इसके अनुसार क्रमबद्ध करें"
           }
         },
         "it" : {
@@ -3011,6 +3575,12 @@
     },
     "Special file" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ملف خاص"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3027,6 +3597,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fichier spécial"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "विशेष फ़ाइल"
           }
         },
         "it" : {
@@ -3075,6 +3651,12 @@
     },
     "Symbolic link" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رابط رمزي"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3091,6 +3673,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lien symbolique"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सिम्बॉलिक लिंक"
           }
         },
         "it" : {
@@ -3139,6 +3727,12 @@
     },
     "This folder has no files." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يحتوي هذا المجلد على ملفات."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3155,6 +3749,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ce dossier ne contient aucun fichier."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस फ़ोल्डर में कोई फ़ाइल नहीं है।"
           }
         },
         "it" : {
@@ -3203,6 +3803,12 @@
     },
     "This folder is not available right now." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هذا المجلد غير متوفر حاليًا."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3219,6 +3825,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ce dossier n’est pas disponible pour le moment."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "यह फ़ोल्डर अभी उपलब्ध नहीं है।"
           }
         },
         "it" : {
@@ -3267,6 +3879,12 @@
     },
     "Try Again" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إعادة المحاولة"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3283,6 +3901,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Réessayer"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फिर से कोशिश करें"
           }
         },
         "it" : {
@@ -3331,6 +3955,12 @@
     },
     "View Options" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خيارات العرض"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3347,6 +3977,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Options de présentation"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "दृश्य विकल्प"
           }
         },
         "it" : {
@@ -3395,6 +4031,12 @@
     },
     "Waiting" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قيد الانتظار"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3411,6 +4053,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "En attente"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "प्रतीक्षा में"
           }
         },
         "it" : {
@@ -3459,6 +4107,12 @@
     },
     "Working" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جارٍ العمل"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3475,6 +4129,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "En cours"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "काम जारी है"
           }
         },
         "it" : {
@@ -3523,6 +4183,12 @@
     },
     "You do not have permission to read this folder." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ليس لديك إذن لقراءة هذا المجلد."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3539,6 +4205,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vous n’avez pas l’autorisation de lire ce dossier."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपके पास इस फ़ोल्डर को पढ़ने की अनुमति नहीं है।"
           }
         },
         "it" : {

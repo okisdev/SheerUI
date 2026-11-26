@@ -1,6 +1,43 @@
 import AppKit
 import SwiftUI
 
+/// A window with a sidebar on the window's material beside content on an inset sheet.
+public struct SidebarWindow<Sidebar: View, Content: View>: View {
+    private let minimumSize: CGSize
+    private let sidebar: Sidebar
+    private let content: Content
+
+    public init(minimumSize: CGSize = CGSize(width: 860, height: 560), @ViewBuilder sidebar: () -> Sidebar, @ViewBuilder content: () -> Content) {
+        self.minimumSize = minimumSize
+        self.sidebar = sidebar()
+        self.content = content()
+    }
+
+    public var body: some View {
+        HStack(spacing: 0) {
+            VStack(spacing: 0) {
+                Color.clear
+                    .frame(height: Metrics.sidebarTop - 6)
+                    .contentShape(.rect)
+                    .gesture(WindowDragGesture())
+                    .allowsWindowActivationEvents(true)
+                sidebar
+                    .frame(maxHeight: .infinity, alignment: .top)
+            }
+            .frame(width: Metrics.sidebarWidth)
+            content
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .sheetSurface()
+        }
+        .windowChromeBackground()
+        .ignoresSafeArea()
+        .windowChrome()
+        .toolbar(removing: .title)
+        .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
+        .frame(minWidth: minimumSize.width, minHeight: minimumSize.height)
+    }
+}
+
 /// The window's own light, translucent material behind the sidebar, so the desktop shows faintly through the chrome without darkening it, while the page stays solid.
 public struct WindowMaterial: NSViewRepresentable {
     public init() {}

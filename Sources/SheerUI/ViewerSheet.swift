@@ -2,27 +2,39 @@ import SwiftUI
 
 /// A sheet that shows rather than completes, such as logs or output: its title over one line of subtitle, the content's own controls, then a round close button bound to Escape, all on one row whose corner sits as far from the top as from the side. The content's `tabAccessory` controls are drawn in that row.
 public struct ViewerSheet<Content: View>: View {
-    let title: String
-    var subtitle: String?
+    let title: Text
+    var subtitle: Text?
+    var width: CGFloat?
     @ViewBuilder let content: Content
     @Environment(\.dismiss) private var dismiss
 
-    public init(title: String, subtitle: String? = nil, @ViewBuilder content: () -> Content) {
+    public init(title: Text, subtitle: Text? = nil, width: CGFloat? = nil, @ViewBuilder content: () -> Content) {
         self.title = title
         self.subtitle = subtitle
+        self.width = width
         self.content = content()
+    }
+
+    public init(title: LocalizedStringKey, subtitle: LocalizedStringKey? = nil, width: CGFloat? = nil, @ViewBuilder content: () -> Content) {
+        self.init(title: Text(title), subtitle: subtitle.map { Text($0) }, width: width, content: content)
+    }
+
+    /// A viewer named by data, such as a file's name, shown as is.
+    @_disfavoredOverload
+    public init(title: some StringProtocol, subtitle: (some StringProtocol)? = String?.none, width: CGFloat? = nil, @ViewBuilder content: () -> Content) {
+        self.init(title: Text(title), subtitle: subtitle.map { Text($0) }, width: width, content: content)
     }
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack(spacing: 8) {
                 VStack(alignment: .leading, spacing: 1) {
-                    Text(title)
+                    title
                         .font(.headline)
                         .lineLimit(1)
                         .truncationMode(.middle)
                     if let subtitle {
-                        Text(subtitle)
+                        subtitle
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                             .lineLimit(1)
@@ -51,6 +63,6 @@ public struct ViewerSheet<Content: View>: View {
             }
         }
         .background(.sheet)
-        .frame(minWidth: 720, idealWidth: 900, minHeight: 460, idealHeight: 620)
+        .frame(minWidth: width ?? 720, idealWidth: width ?? 900, maxWidth: width, minHeight: 460, idealHeight: 620)
     }
 }
